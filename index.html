@@ -223,12 +223,29 @@ div.className =
 "chat-item " +
 (chat.id===currentChatId ? "active" : "");
 
-div.textContent = chat.title;
+div.innerHTML = `
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+<span>${chat.title}</span>
+<button
+onclick="deleteChat('${chat.id}', event)"
+style="
+background:none;
+border:none;
+color:#ef4444;
+cursor:pointer;
+font-size:16px;
+"
+>
+🗑️
+</button>
+</div>
+`;
 
 div.onclick = function(){
 currentChatId = chat.id;
 renderSidebar();
 renderMessages();
+  
 };
 
 chatList.appendChild(div);
@@ -262,7 +279,27 @@ chatBox.scrollTop =
 chatBox.scrollHeight;
 
 }
+function deleteChat(id,event){
 
+event.stopPropagation();
+
+chats =
+chats.filter(chat => chat.id !== id);
+
+if(chats.length === 0){
+createChat();
+return;
+}
+
+if(currentChatId === id){
+currentChatId = chats[0].id;
+}
+
+save();
+renderSidebar();
+renderMessages();
+
+}
 function sendMessage(){
 
 const text = input.value.trim();
