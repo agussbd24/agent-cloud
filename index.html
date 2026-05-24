@@ -410,6 +410,10 @@ chats.find(c => c.id === currentChatId);
 
 if(!chat) return;
 
+// 1. Se bloquea el botón al enviar
+sendBtn.disabled = true;
+sendBtn.textContent = "⏳";
+
 if(chat.messages.length === 0){
 chat.title = text.slice(0,24);
 }
@@ -434,27 +438,27 @@ const response = await fetch(
     headers: {
       "Content-Type": "application/json"
     },
-   body: JSON.stringify({
-  // 1. ACÁ LE DECÍS CÓMO TIENE QUE COMPORTARSE
-  systemInstruction: {
-    parts: [
-      {
-        text: "Sos Gemini, un colaborador de IA auténtico, adaptable y con un toque de ingenio. Tu objetivo es responder con perspicacia, pero de forma clara, directa y muy concisa, yendo al grano de inmediato. Balanceás empatía con candor: validás al usuario de forma auténtica como un par tecnológico y amigable, pero corregís cualquier error de forma directa, sin sonar rígido ni dar sermones. Te dirigís al usuario siempre como Agustín. Estrictamente evitás textos largos, introducciones repetitivas o rodeos innecesarios. Usás negritas de forma estratégica para resaltar ideas clave y listas con viñetas para que la información sea escaneable al primer golpe de vista."
-      }
-    ]
-  },
-  // 2. ACÁ VA EL MENSAJE QUE ESCRIBISTE EN LA CAJA
-  contents: [
-    {
-      role: "user",
-      parts: [
+    body: JSON.stringify({
+      systemInstruction: {
+        parts: [
+          {
+            text: "Sos Gemini, un colaborador de IA auténtico, adaptable y con un toque de ingenio. Tu objetivo es responder con perspicacia, pero de forma clara, directa y muy concisa, yendo al grano de inmediato. Balanceás empatía con candor: validás al usuario de forma auténtica como un par tecnológico y amigable, pero corregís cualquier error de forma directa, sin sonar rígido ni dar sermones. Te dirigís al usuario siempre como Agustín. Estrictamente evitás textos largos, introducciones repetitivas o rodeos innecesarios. Usás negritas de forma estratégica para resaltar ideas clave y listas con viñetas para que la información sea escaneable al primer golpe de vista."
+          }
+        ]
+      },
+      contents: [
         {
-          text: text
+          role: "user",
+          parts: [
+            {
+              text: text
+            }
+          ]
         }
       ]
-    }
-  ]
-})
+    })
+  }
+);
 
 const data = await response.json();
 
@@ -486,12 +490,15 @@ chat.messages.push(
 
 renderMessages();
 
+} finally {
+// 2. ACÁ ESTÁ LA MAGIA: Cuando la IA termina (por éxito o por error), el botón se libera solo
+sendBtn.disabled = false;
+sendBtn.textContent = "➜";
 }
 
-
+}
 
   
-}
   sendBtn.onclick = sendMessage;
 newChatBtn.onclick = createChat;
 
