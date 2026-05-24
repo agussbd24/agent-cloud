@@ -6,134 +6,224 @@
 <title>Agent Cloud</title>
 
 <style>
-*{
-  
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,system-ui,sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-body{
-height:100vh;
-background:linear-gradient(180deg,#0b0f14,#111827);
-color:white;
-overflow:hidden;
+body {
+  height: 100vh;
+  /* Fondo premium ultra oscuro con un toque de azul profundo */
+  background: radial-gradient(circle at top right, #1e293b, #0f172a, #020617);
+  color: #f8fafc;
+  overflow: hidden;
 }
 
-.app{
-display:flex;
-height:100vh;
+.app {
+  display: flex;
+  height: 100vh;
 }
 
-.sidebar{
-width:280px;
-background:rgba(255,255,255,.03);
-border-right:1px solid rgba(255,255,255,.06);
-padding:18px;
-display:flex;
-flex-direction:column;
-gap:12px;
+/* Sidebar estilo futurista translúcido */
+.sidebar {
+  width: 280px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.new-chat{
-background:#2563eb;
-border:none;
-color:white;
-padding:14px;
-border-radius:14px;
-cursor:pointer;
-font-weight:600;
+.new-chat {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border: none;
+  color: white;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
-.chat-list{
-display:flex;
-flex-direction:column;
-gap:10px;
-overflow:auto;
+.new-chat:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
-.chat-item{
-background:rgba(255,255,255,.03);
-padding:12px;
-border-radius:12px;
-cursor:pointer;
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
 }
 
-.chat-item.active{
-outline:1px solid rgba(59,130,246,.7);
+.chat-item {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  transition: all 0.2s ease;
 }
 
-.main{
-flex:1;
-display:flex;
-flex-direction:column;
-padding:20px;
+.chat-item:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:16px;
+.chat-item.active {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
 }
 
-select{
-background:#151b23;
-color:white;
-border:none;
-padding:10px 14px;
-border-radius:12px;
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 40px; /* Más aire a los costados tipo app premium */
+  max-width: 1200px; /* Centra el contenido para que no se estire infinito en pantallas grandes */
+  margin: 0 auto;
+  width: 100%;
 }
 
-.stop{
-background:#dc2626;
-border:none;
-color:white;
-padding:10px 16px;
-border-radius:12px;
-cursor:pointer;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.chat{
-flex:1;
-overflow:auto;
-padding:12px;
-display:flex;
-flex-direction:column;
-gap:12px;
+.header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.message{
-background:#151b23;
-padding:14px;
-border-radius:14px;
-max-width:75%;
+select {
+  background: #1e293b;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.input-area{
-display:flex;
-gap:12px;
-margin-top:16px;
+.stop {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 10px;
+  transition: all 0.2s;
 }
 
-input{
-flex:1;
-padding:16px;
-background:#151b23;
-border:none;
-border-radius:16px;
-color:white;
-outline:none;
+.stop:hover {
+  background: #dc2626;
+  color: white;
 }
 
-.send{
-background:#2563eb;
-border:none;
-color:white;
-padding:0 22px;
-border-radius:16px;
-cursor:pointer;
+/* Área de chat limpia, estilo flujo continuo */
+.chat {
+  flex: 1;
+  overflow: auto;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Más separación entre bloques de conversación */
+}
+
+/* Mensajes estilo Gemini moderno */
+.message {
+  padding: 8px 0;
+  max-width: 100%;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02); /* Línea sutil divisoria */
+}
+
+/* Si el texto empieza con el emoji de usuario, le damos un tono más brillante */
+.message:contains("👤") {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Barra de entrada flotante estilo "Píldora" (Copiado de Gemini Móvil/Web) */
+.input-area {
+  display: flex;
+  align-items: center;
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px; /* Súper redondeado */
+  padding: 6px 12px 6px 24px;
+  margin-top: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.3s ease;
+}
+
+.input-area:focus-within {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+}
+
+input {
+  flex: 1;
+  padding: 12px 0;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  font-size: 1rem;
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+.send {
+  background: #2563eb;
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Botón circular moderno */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.send:hover {
+  background: #3b82f6;
+  transform: scale(1.05);
+}
+
+/* Personalización de las barras de scroll para que no queden toscas */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 </style>
 </head>
