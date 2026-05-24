@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Agent Cloud</title>
 
 <style>
@@ -151,7 +151,7 @@ cursor:pointer;
 <h2>AGENT CLOUD</h2>
 
 <div>
-<select id="model">
+<select>
 <option>Gemini</option>
 <option>DeepSeek</option>
 <option>GPT</option>
@@ -165,7 +165,7 @@ cursor:pointer;
 <div class="chat"></div>
 
 <div class="input-area">
-<input placeholder="Escribí una instrucción..." />
+<input id="messageInput" placeholder="Escribí una instrucción..." />
 <button class="send">➜</button>
 </div>
 
@@ -180,8 +180,8 @@ let currentChatId = null;
 
 const chatList = document.querySelector(".chat-list");
 const chatBox = document.querySelector(".chat");
-const input = document.querySelector("input");
-const send = document.querySelector(".send");
+const input = document.getElementById("messageInput");
+const sendBtn = document.querySelector(".send");
 const newChatBtn = document.querySelector(".new-chat");
 
 function save(){
@@ -196,8 +196,7 @@ function createChat(){
 const chat = {
 id: Date.now().toString(),
 title: "Nuevo chat",
-messages: [],
-model: "Gemini"
+messages: []
 };
 
 chats.unshift(chat);
@@ -206,24 +205,23 @@ currentChatId = chat.id;
 save();
 renderSidebar();
 renderMessages();
-
 }
 
 function renderSidebar(){
 
-chatList.innerHTML = "";
+chatList.innerHTML="";
 
 chats.forEach(chat=>{
 
-const div = document.createElement("div");
+const div=document.createElement("div");
 
 div.className =
 "chat-item " +
-(chat.id === currentChatId ? "active":"");
+(chat.id===currentChatId ? "active" : "");
 
 div.textContent = chat.title;
 
-div.onclick = ()=>{
+div.onclick = function(){
 currentChatId = chat.id;
 renderSidebar();
 renderMessages();
@@ -237,35 +235,40 @@ chatList.appendChild(div);
 
 function renderMessages(){
 
-chatBox.innerHTML = "";
+chatBox.innerHTML="";
 
 const chat =
-chats.find(c=>c.id===currentChatId);
+chats.find(c => c.id === currentChatId);
 
 if(!chat) return;
 
 chat.messages.forEach(msg=>{
 
-const div = document.createElement("div");
+const div =
+document.createElement("div");
 
 div.className="message";
-
 div.textContent=msg;
 
 chatBox.appendChild(div);
 
 });
 
+chatBox.scrollTop =
+chatBox.scrollHeight;
+
 }
 
-send.onclick = ()=>{
+function sendMessage(){
 
 const text = input.value.trim();
 
 if(!text) return;
 
 const chat =
-chats.find(c=>c.id===currentChatId);
+chats.find(c => c.id === currentChatId);
+
+if(!chat) return;
 
 if(chat.messages.length===0){
 chat.title = text.slice(0,24);
@@ -273,15 +276,31 @@ chat.title = text.slice(0,24);
 
 chat.messages.push(text);
 
+input.value="";
+
 save();
 renderSidebar();
 renderMessages();
+}
 
-input.value = "";
+sendBtn.addEventListener(
+"click",
+sendMessage
+);
 
-};
+input.addEventListener(
+"keydown",
+function(e){
+if(e.key==="Enter"){
+sendMessage();
+}
+}
+);
 
-newChatBtn.onclick = createChat;
+newChatBtn.addEventListener(
+"click",
+createChat
+);
 
 if(chats.length===0){
 createChat();
