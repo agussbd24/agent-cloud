@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Agent Cloud</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,system-ui,sans-serif;
+}
+
+body{
+background: linear-gradient(180deg,#0b0f14,#111827);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+}
+
+.app{
+width:92%;
+max-width:1100px;
+height:90vh;
+background:rgba(255,255,255,0.03);
+backdrop-filter:blur(18px);
+border-radius:24px;
+padding:24px;
+display:flex;
+flex-direction:column;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.logo{
+font-size:22px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.controls{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+select{
+background:#151b23;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:12px;
+font-size:14px;
+}
+
+.stop{
+background:#dc2626;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+}
+
+.chat{
+flex:1;
+background:rgba(255,255,255,0.02);
+border-radius:20px;
+padding:20px;
+overflow:auto;
+}
+
+.message{
+background:#151b23;
+padding:14px;
+border-radius:14px;
+max-width:70%;
+margin-bottom:14px;
+}
+
+.input-area{
+display:flex;
+gap:12px;
+margin-top:18px;
+}
+
+input{
+flex:1;
+padding:16px;
+background:#151b23;
+border:none;
+outline:none;
+color:white;
+border-radius:16px;
+font-size:15px;
+}
+
+.send{
+background:#2563eb;
+color:white;
+border:none;
+padding:0 22px;
+border-radius:16px;
+cursor:pointer;
+font-size:16px;
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<div class="header">
+<div class="logo">AGENT CLOUD</div>
+
+<div class="controls">
+<select>
+<option>Gemini</option>
+<option>DeepSeek</option>
+<option>GPT</option>
+<option>Claude</option>
+</select>
+
+<button class="stop">⛔ Detener</button>
+</div>
+</div>
+
+<div class="chat">
+<div class="message">
+Hola. Soy tu agente. ¿Qué querés hacer hoy?
+</div>
+</div>
+
+<div class="input-area">
+<input placeholder="Escribí una instrucción..." />
+<button class="send">➜</button>
+</div>
+
+</div>
+
+</body>
+</html>
