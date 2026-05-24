@@ -434,20 +434,27 @@ const response = await fetch(
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      contents: [
+   body: JSON.stringify({
+  // 1. ACÁ LE DECÍS CÓMO TIENE QUE COMPORTARSE
+  systemInstruction: {
+    parts: [
+      {
+        text: "Sos un asistente de inteligencia artificial avanzado, auténtico, empático y con un toque de ingenio. Tu objetivo es ser claro, directo y conciso, evitando rodeos o explicaciones innecesarias. Te dirigís al usuario como Agustín. No usás modismos robóticos ni introducciones repetitivas."
+      }
+    ]
+  },
+  // 2. ACÁ VA EL MENSAJE QUE ESCRIBISTE EN LA CAJA
+  contents: [
+    {
+      role: "user",
+      parts: [
         {
-          role: "user",
-          parts: [
-            {
-              text: text
-            }
-          ]
+          text: text
         }
       ]
-    })
-  }
-);
+    }
+  ]
+})
 
 const data = await response.json();
 
