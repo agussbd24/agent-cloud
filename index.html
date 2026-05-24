@@ -358,11 +358,21 @@ text:text
 );
 
 const data = await response.json();
+
 console.log(data);
 
-let reply =
-data.candidates?.[0]?.content?.parts?.[0]?.text
-|| "No pude responder.";
+let reply = "No pude responder.";
+
+if (
+  data.candidates &&
+  data.candidates.length > 0 &&
+  data.candidates[0].content &&
+  data.candidates[0].content.parts
+) {
+  reply = data.candidates[0].content.parts
+    .map(part => part.text || "")
+    .join("");
+}
 
 chat.messages.pop();
 
