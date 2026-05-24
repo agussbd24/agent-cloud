@@ -165,7 +165,11 @@ cursor:pointer;
 <div class="chat"></div>
 
 <div class="input-area">
-<input id="messageInput" placeholder="Escribí una instrucción..." />
+<input
+id="messageInput"
+placeholder="Escribí una instrucción..."
+onkeydown="if(event.key==='Enter'){sendMessage()}"
+/>
 <button class="send">➜</button>
 </div>
 
