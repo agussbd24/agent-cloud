@@ -358,6 +358,7 @@ text:text
 );
 
 const data = await response.json();
+console.log(data);
 
 let reply =
 data.candidates?.[0]?.content?.parts?.[0]?.text
